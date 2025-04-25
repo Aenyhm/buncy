@@ -50,21 +50,21 @@ public struct Sprite {
 /// Utile pour un tileset ou une spritesheet.
 /// </summary>
 public readonly struct SpriteCollection {
-    public readonly Dictionary<string, Sprite> SpritesByName;
+    public readonly OrderedDictionary<string, Sprite> SpritesByName;
 
-    public SpriteCollection(Dictionary<string, Sprite> spritesByName) {
+    public SpriteCollection(OrderedDictionary<string, Sprite> spritesByName) {
         SpritesByName = spritesByName;
     }
 
     public SpriteCollection(Sprite sprite) {
-        SpritesByName = new Dictionary<string, Sprite>() {{ "default", sprite }};
+        SpritesByName = new OrderedDictionary<string, Sprite> {{ "default", sprite }};
     }
 
     public static SpriteCollection CreateFromTileset(
         Texture2D texture, Vec2I32 tileSetSize, Vec2I32 tileSize, Vec2I32 tileDisplaySize, Vec2I32 originOffset,
         string[] names
     ) {
-        var spritesByName = new Dictionary<string, Sprite>(tileSetSize.X*tileSetSize.Y);
+        var spritesByName = new OrderedDictionary<string, Sprite>(tileSetSize.X*tileSetSize.Y);
         for (var y = 0; y < tileSetSize.Y; y++) {
             for (var x = 0; x < tileSetSize.X; x++) {
                 var spriteIndex = tileSetSize.X*y + x;
@@ -82,5 +82,12 @@ public readonly struct SpriteCollection {
         }
 
         return new SpriteCollection(spritesByName);
+    }
+    
+    // À utiliser à la place de First().Value (Linq) pour éviter de l'allocation mémoire.
+    public Sprite GetFirstSprite() {
+        foreach (var pair in SpritesByName) return pair.Value;
+        
+        throw new InvalidOperationException("No sprite in this collection.");
     }
 }

@@ -25,7 +25,7 @@ public class EntityViewManager {
 
                 view.Sprite = TileSpriteCollectionService.Instance.Get(e.Type).SpritesByName[spriteIndex.ToString()];
             } else {
-                view.Sprite = TileSpriteCollectionService.Instance.Get(e.Type).SpritesByName.First().Value;
+                view.Sprite = TileSpriteCollectionService.Instance.Get(e.Type).GetFirstSprite();
             }
             
             view.Color = e.Type == TileType.Exit ? _sandColor : Color.White;

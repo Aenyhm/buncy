@@ -142,7 +142,7 @@ public class EditorMenu {
                     _panel.BeginRow();
                 }
 
-                var sprite = TileSpriteCollectionService.Instance.Get(type).SpritesByName.First().Value;
+                var sprite = TileSpriteCollectionService.Instance.Get(type).GetFirstSprite();
 
                 var active = _scene.LayerManager.CurrentLayerId == layerId && layer.CurrentTileId == type;
                 if (_panel.PushButtonImage(sprite, _tileButtonSize, active)) {

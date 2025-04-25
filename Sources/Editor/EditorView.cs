@@ -163,7 +163,7 @@ public class EditorView {
                         var position = new Vec2I32(x, y);
                         var tileValue = layer.Get(position);
                         if (tileValue != 0) {
-                            var sprite = TileSpriteCollectionService.Instance.Get(tileValue).SpritesByName.First().Value;
+                            var sprite = TileSpriteCollectionService.Instance.Get(tileValue).GetFirstSprite();
                             var dest = new Rectangle((position*_tileSide).ToVec2F32(), _tileSide*Vec2F32.One);
                             DrawTexturePro(sprite.Texture, sprite.Coordinates.ToRaylibRectangle(), dest, Vec2F32.Zero, 0, color);
                         }
@@ -177,7 +177,7 @@ public class EditorView {
                 var rec = new Rectangle((hotPosition*_tileSide).ToVec2F32(), _tileSide*Vec2F32.One);
 
                 if (currentLayer.CurrentTileId != 0) {
-                    var sprite = TileSpriteCollectionService.Instance.Get(currentLayer.CurrentTileId).SpritesByName.First().Value;
+                    var sprite = TileSpriteCollectionService.Instance.Get(currentLayer.CurrentTileId).GetFirstSprite();
                     DrawTexturePro(sprite.Texture, sprite.Coordinates.ToRaylibRectangle(), rec, Vec2F32.Zero, 0, GetColor(0xffffff66));
                 } else {
                     DrawRectangleRec(rec, _hotCellColor);
